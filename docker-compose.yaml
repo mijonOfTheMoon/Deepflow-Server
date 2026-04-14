@@ -120,6 +120,22 @@ services:
   deepflow-grafana:
     image: registry.cn-hongkong.aliyuncs.com/deepflow-ce/grafana:10.1.5
     container_name: deepflow-grafana
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-K8s-Ingress.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-K8s-Pod-Map.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-K8s-Pod.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-Redis-Monitoring-K8S.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-SQL-Monitoring-K8S.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Applicaton-Dubbo-Monitoring-K8S.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Network-K8s-Pod-Map.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Network-K8s-Pod.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Distributed-Tracing.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Application-Request-Log.json
+        rm -f /tmp/dashboards/DeepFlow-Templates/Network-Flow-Log.json
+        exec /run.sh
     environment:
       TZ: "Asia/Jakarta"
       GF_SECURITY_ADMIN_USER: "admin"
