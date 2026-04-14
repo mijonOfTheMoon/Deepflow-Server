@@ -7,7 +7,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: deepflow
       MYSQL_DATABASE: grafana
-      TZ: Asia/Shanghai
+      TZ: Asia/Jakarta
     volumes:
       - type: bind
         source: ./common/config/mysql/my.cnf
@@ -24,7 +24,7 @@ services:
     container_name: deepflow-clickhouse
     restart: always
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Jakarta
     volumes:
       - type: bind
         source: ./common/config/clickhouse/config.xml
@@ -38,6 +38,8 @@ services:
     - mysql
     networks:
       - deepflow
+    ports:
+      - 9000:9000
 
   deepflow-server:
     image: registry.cn-hongkong.aliyuncs.com/deepflow-ce/deepflow-server:${DEEPFLOW_VERSION}
@@ -50,7 +52,7 @@ services:
       K8S_NAMESPACE_FOR_DEEPFLOW: deepflow
       K8S_NODE_NAME_FOR_DEEPFLOW: deepflow-host
       K8S_POD_NAME_FOR_DEEPFLOW: deepflow-container
-      TZ: Asia/Shanghai
+      TZ: Asia/Jakarta
     volumes:
       - type: bind
         source: ./common/config/deepflow-server/server.yaml
@@ -73,7 +75,7 @@ services:
     container_name: deepflow-app
     restart: always
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Jakarta
     volumes:
       - type: bind
         source: ./common/config/deepflow-app/app.yaml
