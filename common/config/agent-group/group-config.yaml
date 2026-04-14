@@ -1,0 +1,27 @@
+inputs:
+  resources:
+    workload_resource_sync_enabled: true
+  cbpf:
+    af_packet:
+      interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
+  ebpf:
+    profile:
+      languages:
+        python_disabled: true
+processors:
+  request_log:
+    application_protocol_inference:
+      enabled_protocols:
+        - HTTP
+        - HTTP2
+        - gRPC
+        - FastCGI
+        - MySQL
+        - PostgreSQL
+        - Redis
+        - MongoDB
+        - Memcached
+        - Kafka
+        - AMQP
+        - DNS
+        - TLS

@@ -7,7 +7,6 @@ Reference: https://deepflow.io/docs/
 ## Prerequisites
 
 - Linux VPS with Docker and Docker Compose
-- Ports available: 3000 (Grafana), 30035 (gRPC), 30033 (data plane)
 
 ## Config
 
@@ -21,6 +20,16 @@ docker compose up -d
 ```
 
 Grafana: `http://<NODE_IP>:3000` (admin:deepflow)
+
+## Agent Group Setup
+
+After server is running, create agent group and push config:
+
+```bash
+bash scripts/setup-group.sh
+```
+
+This creates a `sekawan` group with config for Docker environments. The script outputs the `agent-group-id`to use in your agent's config.
 
 ## License
 
