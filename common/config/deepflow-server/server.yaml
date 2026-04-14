@@ -37,6 +37,23 @@ ingester:
   ckdb-auth:
     password:
     username: default
+  flow-metrics-ttl-hour:
+    vtap-flow-1m: 168           # network metrics 1-min granularity  = 7 days
+    vtap-flow-1s: 24            # network metrics 1-sec granularity  = 1 day
+    vtap-app-1m: 168            # application metrics 1-min          = 7 days
+    vtap-app-1s: 24             # application metrics 1-sec          = 1 day
+  flow-log-ttl-hour:
+    l4-flow-log: 72             # L4 flow logs                       = 3 days
+    l7-flow-log: 72             # L7 call logs (HTTP/gRPC/MySQL...)  = 3 days
+    l4-packet: 72               # L4 packet data                     = 3 days
+  event-ttl-hour: 168           # resource/k8s events                = 7 days
+  alert-event-ttl-hour: 168     # alert events                       = 7 days
+  file-event-ttl-hour: 168      # file I/O events                    = 7 days
+  profile-ttl-hour: 72          # continuous profiling               = 3 days
+  pcap-ttl-hour: 72             # packet capture                     = 3 days
+  ext-metrics-ttl-hour: 168     # ext metrics                        = 7 days
+  prometheus-ttl-hour: 168      # prometheus metrics                 = 7 days
+  application-log-ttl-hour: 168 # application logs                   = 7 days
 querier:
   listen-port: 20416
   clickhouse:
