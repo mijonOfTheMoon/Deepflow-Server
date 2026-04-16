@@ -7,6 +7,10 @@
 # New format: inputs.resources.private_cloud.hypervisor_resource_enabled
 platform_enabled: 1
 
+# Disable system load circuit breaker (0 = disabled)
+# New format: global.circuit_breakers.relative_sys_load.trigger_threshold
+system_load_circuit_breaker_threshold: 0
+
 # NIC regex for traffic capture (includes docker bridge)
 # New format: inputs.cbpf.af_packet.interface_regex
 tap_interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
