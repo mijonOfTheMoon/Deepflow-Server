@@ -40,11 +40,13 @@ echo "Use this in your agent's deepflow-agent.yaml:"
 echo "    vtap-group-id-request: '$GROUP_ID'"
 echo ""
 
-# push agent group config
-echo "Pushing agent group config..."
-docker exec deepflow-server deepflow-ctl agent-group-config create "$GROUP_ID" \
-  -f <(cat "$CONFIG_FILE") 2>/dev/null || \
-docker exec -i deepflow-server deepflow-ctl agent-group-config create "$GROUP_ID" -f - < "$CONFIG_FILE"
+# 4. Push agent group config via REST API (YAML body)
+echo "==> Pushing agent group config..."
+RESULT=$(curl -s -X POST "$BASE_URL/vtap-group-configuration/advanced/" \
+  -H "Content-Type: application/x-yaml" \
+  -d "vtap_group_lcuuid: $LCUUID
+$(cat $CONFIG_FILE)")
 
+echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
 echo ""
-echo "Done!"
+echo "Done! Agent group '$GROUP_NAME' created with ID: $SHORT_UUID"
