@@ -57,7 +57,7 @@ echo ""
 echo "Pushing agent group config..."
 RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/advanced/" \
   -H "Content-Type: application/x-yaml" \
-  -d "vtap_group_lcuuid: $LCUUID
+  -d "vtap_group_id: $SHORT_UUID
 $(cat $CONFIG_FILE)")
 
 echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
