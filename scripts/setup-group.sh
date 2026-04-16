@@ -52,14 +52,22 @@ echo "Use this in your agent's deepflow-agent.yaml:"
 echo "    vtap-group-id-request: '$SHORT_UUID'"
 echo ""
 
-# push agent group config via REST API (YAML body)
-# Ref: https://github.com/deepflowio/deepflow/blob/main/server/controller/http/router/vtap_group_config.go
+# push agent group config via REST API (YAML body), create if not exists, update if already exists
 echo "Pushing agent group config..."
-RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/advanced/" \
+CREATE_RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/advanced/" \
   -H "Content-Type: application/x-yaml" \
   -d "vtap_group_id: $SHORT_UUID
 $(cat $CONFIG_FILE)")
 
-echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+if echo "$CREATE_RESULT" | grep -q "already exist"; then
+  echo "Config exists, updating..."
+  RESULT=$(curl -s -X PATCH "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/advanced/$LCUUID/" \
+    -H "Content-Type: application/x-yaml" \
+    -d "$(cat $CONFIG_FILE)")
+  echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+else
+  echo "$CREATE_RESULT" | python3 -m json.tool 2>/dev/null || echo "$CREATE_RESULT"
+fi
+
 echo ""
-echo "Done! Agent group '$GROUP_NAME' created with ID: $SHORT_UUID"
+echo "Done! Agent group '$GROUP_NAME' with ID: $SHORT_UUID"
