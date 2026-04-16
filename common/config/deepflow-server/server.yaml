@@ -26,6 +26,13 @@ controller:
       host: ntp.cloud.aliyuncs.com
       port: 123
       timeout: 1
+  genesis:
+    local_ip_ranges:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 169.254.0.0/15
+      - 224.0.0.0-240.255.255.255
 ingester:
   es-syslog: false
   ckdb:
