@@ -64,7 +64,24 @@ RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configura
   -d "vtap_group_id: $SHORT_UUID
 $(cat $CONFIG_FILE)")
 
-echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('OPT_STATUS',''))" 2>/dev/null)
+
+if [ "$STATUS" = "SUCCESS" ]; then
+  # verify config was actually saved
+  VERIFY=$(curl -s "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/filter/?vtap_group_id=$SHORT_UUID")
+  SAVED=$(echo "$VERIFY" | python3 -c "import sys,json; d=json.load(sys.stdin).get('DATA',''); print(len(d))" 2>/dev/null)
+  if [ "$SAVED" -gt 50 ]; then
+    echo "Config pushed successfully."
+    echo "$VERIFY" | python3 -c "import sys,json; print(json.load(sys.stdin).get('DATA',''))" 2>/dev/null
+  else
+    echo "WARNING: Config push returned SUCCESS but config appears empty."
+    echo "Server v7.1 may not support this config format."
+    echo "Saved data: $(echo "$VERIFY" | python3 -c "import sys,json; print(json.load(sys.stdin).get('DATA',''))" 2>/dev/null)"
+  fi
+else
+  echo "ERROR: Config push failed."
+  echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+fi
 
 echo ""
-echo "Done! Agent group '$GROUP_NAME' with ID: $SHORT_UUID"
+echo "Agent group '$GROUP_NAME' — ID: $SHORT_UUID"

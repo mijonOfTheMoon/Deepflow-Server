@@ -1,27 +1,35 @@
-inputs:
-  resources:
-    workload_resource_sync_enabled: true
-  cbpf:
-    af_packet:
-      interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
-  ebpf:
-    profile:
-      languages:
-        python_disabled: true
-processors:
-  request_log:
-    application_protocol_inference:
-      enabled_protocols:
-        - HTTP
-        - HTTP2
-        - gRPC
-        - FastCGI
-        - MySQL
-        - PostgreSQL
-        - Redis
-        - MongoDB
-        - Memcached
-        - Kafka
-        - AMQP
-        - DNS
-        - TLS
+# Agent group config for legacy host (VPS/Docker Compose)
+# Format ref: curl http://<SERVER_IP>:30417/v1/vtap-group-configuration/example/
+# Docs ref: https://deepflow.io/docs/best-practice/agent-advanced-config/
+# New format ref: https://deepflow.io/docs/configuration/agent/
+
+# Sync host resource info to server
+# New format: inputs.resources.private_cloud.hypervisor_resource_enabled
+platform_enabled: 1
+
+# NIC regex for traffic capture (includes docker bridge)
+# New format: inputs.cbpf.af_packet.interface_regex
+tap_interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
+
+static_config:
+  # Application protocol parsers
+  # New format: processors.request_log.application_protocol_inference.enabled_protocols
+  l7-protocol-enabled:
+    - HTTP
+    - HTTP2
+    - FastCGI
+    - MySQL
+    - PostgreSQL
+    - Redis
+    - MongoDB
+    - Memcached
+    - Kafka
+    - AMQP
+    - DNS
+    - TLS
+
+  # ebpf:
+  #   # On-CPU profiling for all processes except Python
+  #   # New format: inputs.ebpf.profile.on_cpu + inputs.proc.process_matcher
+  #   on-cpu-profile:
+  #     regex: ^(?!python).*
