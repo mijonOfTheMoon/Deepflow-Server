@@ -14,7 +14,7 @@ echo "DeepFlow Server: $SERVER_IP:$SERVER_PORT"
 echo "Creating domain: $DOMAIN_NAME"
 curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/domains/" \
   -H "Content-Type: application/json" \
-  -d "{\"name\": \"$DOMAIN_NAME\", \"type\": \"agent_sync\"}" | python3 -m json.tool || true
+  -d "{\"NAME\": \"$DOMAIN_NAME\", \"TYPE\": 23}" | python3 -m json.tool || true
 
 # create agent group
 echo "Creating agent group: $GROUP_NAME"
@@ -24,25 +24,38 @@ RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-groups/" \
 
 echo "$RESULT" | python3 -m json.tool || true
 
-# get agent group ID
-echo "Fetching agent group ID..."
-GROUP_ID=$(curl -s "http://$SERVER_IP:$SERVER_PORT/v1/vtap-groups/" | \
-  python3 -c "import sys,json; groups=json.load(sys.stdin).get('DATA',[]); print(next((g['SHORT_UUID'] for g in groups if g['NAME']=='$GROUP_NAME'),''))" 2>/dev/null)
+# get agent group LCUUID and SHORT_UUID
+echo "Fetching agent group info..."
+GROUP_INFO=$(curl -s "http://$SERVER_IP:$SERVER_PORT/v1/vtap-groups/" | \
+  python3 -c "
+import sys, json
+data = json.load(sys.stdin).get('DATA', [])
+for g in data:
+    if g['NAME'] == '$GROUP_NAME':
+        print(g.get('LCUUID', ''))
+        print(g.get('SHORT_UUID', ''))
+        break
+" 2>/dev/null)
 
-if [ -z "$GROUP_ID" ]; then
-  echo "ERROR: Could not find agent group ID. Check if deepflow-server is running."
+LCUUID=$(echo "$GROUP_INFO" | sed -n '1p')
+SHORT_UUID=$(echo "$GROUP_INFO" | sed -n '2p')
+
+if [ -z "$LCUUID" ]; then
+  echo "ERROR: Could not find agent group. Check if deepflow-server is running."
   exit 1
 fi
 
-echo "Agent group ID: $GROUP_ID"
+echo "Agent group LCUUID: $LCUUID"
+echo "Agent group ID: $SHORT_UUID"
 echo ""
 echo "Use this in your agent's deepflow-agent.yaml:"
-echo "    vtap-group-id-request: '$GROUP_ID'"
+echo "    vtap-group-id-request: '$SHORT_UUID'"
 echo ""
 
-# 4. Push agent group config via REST API (YAML body)
-echo "==> Pushing agent group config..."
-RESULT=$(curl -s -X POST "$BASE_URL/vtap-group-configuration/advanced/" \
+# push agent group config via REST API (YAML body)
+# Ref: https://github.com/deepflowio/deepflow/blob/main/server/controller/http/router/vtap_group_config.go
+echo "Pushing agent group config..."
+RESULT=$(curl -s -X POST "http://$SERVER_IP:$SERVER_PORT/v1/vtap-group-configuration/advanced/" \
   -H "Content-Type: application/x-yaml" \
   -d "vtap_group_lcuuid: $LCUUID
 $(cat $CONFIG_FILE)")
