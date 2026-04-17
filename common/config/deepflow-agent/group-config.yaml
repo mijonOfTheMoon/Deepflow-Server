@@ -6,8 +6,6 @@ inputs:
       interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
   ebpf:
     profile:
-      on_cpu:
-        disabled: true
       languages:
         python_disabled: true
         php_disabled: true
