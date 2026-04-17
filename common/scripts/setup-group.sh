@@ -21,8 +21,8 @@ fi
 GROUP_ID=$(deepflow-ctl agent-group list | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
 
 if [ -n "$GROUP_ID" ]; then
-    deepflow-ctl agent-group update "$GROUP_ID" --config-file "$CONFIG_FILE"
+    deepflow-ctl agent-group update "$GROUP_ID" -f   "$CONFIG_FILE"
 else
     deepflow-ctl agent-group create "$GROUP_NAME"
-    deepflow-ctl agent-group create "$GROUP_ID" --config-file "$CONFIG_FILE"
+    deepflow-ctl agent-group create "$GROUP_ID" -f   "$CONFIG_FILE"
 fi
