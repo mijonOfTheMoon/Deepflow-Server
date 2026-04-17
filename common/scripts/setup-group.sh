@@ -7,7 +7,7 @@ SERVER_PORT="30417"
 GROUP_NAME="sekawan"
 DOMAIN_NAME="legacy-host"
 CONFIG_FILE="common/config/agent-group/group-config.yaml"
-DEEPFLOWCTL_VER=$(echo "${DEEPFLOW_VERSION:-$(grep DEEPFLOW_VERSION .env | cut -d= -f2)}" | sed 's/^v//')
+DEEPFLOWCTL_VER="${DEEPFLOW_VERSION:-$(grep DEEPFLOW_VERSION .env | cut -d= -f2)}"
 
 # Setup deepflow-ctl kalau belum ada
 if ! command -v deepflow-ctl &> /dev/null; then
