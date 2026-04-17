@@ -19,7 +19,8 @@ fi
 
 DOMAIN_LEGACY=$(common/bin/deepflow-ctl domain list | grep legacy-host)
 
-if [ -n "$DOMAIN_LEGACY" ]; then
+if [ -z "$DOMAIN_LEGACY" ]; then
+    echo "Creating domain..."
     common/bin/deepflow-ctl domain create -f common/config/deepflow-agent/domain-config.yaml
 fi
 
