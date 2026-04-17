@@ -9,7 +9,6 @@ DOMAIN_NAME="legacy-host"
 CONFIG_FILE="common/config/agent-group/group-config.yaml"
 DEEPFLOWCTL_VER="${DEEPFLOW_VERSION:-$(grep DEEPFLOW_VERSION .env | cut -d= -f2)}"
 
-# Setup deepflow-ctl kalau belum ada
 if ! command -v deepflow-ctl &> /dev/null; then
     curl -o /usr/bin/deepflow-ctl \
     "https://deepflow-ce.oss-cn-beijing.aliyuncs.com/bin/ctl/$DEEPFLOWCTL_VER/linux/$(arch \
@@ -17,10 +16,16 @@ if ! command -v deepflow-ctl &> /dev/null; then
     chmod a+x /usr/bin/deepflow-ctl
 fi
 
-GROUP_ID=$(deepflow-ctl agent-group list | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
+GROUP_ID=$(deepflow-ctl agent-group list > /dev/null 2>&1 | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
 
 if [ -n "$GROUP_ID" ]; then
-    deepflow-ctl agent-group-config update "$GROUP_ID" -f "$CONFIG_FILE"
+    CONFIG_ID=$(deepflow-ctl agent-group-config list > /dev/null 2>&1 | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
+
+    if [ -n "$CONFIG_ID" ]; then
+        deepflow-ctl agent-group-config update "$CONFIG_ID" -f "$CONFIG_FILE"
+    else
+        deepflow-ctl agent-group-config create "$GROUP_ID" -f "$CONFIG_FILE"     
+    fi
 else
     deepflow-ctl agent-group create "$GROUP_NAME"
     deepflow-ctl agent-group-config create "$GROUP_ID" -f "$CONFIG_FILE"
