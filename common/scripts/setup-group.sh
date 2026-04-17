@@ -32,5 +32,8 @@ if [ -n "$GROUP_ID" ]; then
 else
     echo "Creating new agent group and configuration..."
     common/bin/deepflow-ctl agent-group create "$GROUP_NAME"
+    GROUP_ID=$(common/bin/deepflow-ctl agent-group list | grep "$GROUP_NAME" | awk '{print $2}')
     common/bin/deepflow-ctl agent-group-config create "$GROUP_ID" -f "$CONFIG_FILE"
 fi
+
+echo "Group id: $GROUP_ID"
