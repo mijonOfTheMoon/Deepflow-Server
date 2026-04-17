@@ -17,10 +17,10 @@ if ! command -v deepflow-ctl &> /dev/null; then\
     chmod a+x /usr/bin/deepflow-ctl
 fi
 
-GROUP_ID=$(deepflow-ctl agent-group list > /dev/null 2>&1 | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
+GROUP_ID=$(deepflow-ctl agent-group list | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
 
 if [ -n "$GROUP_ID" ]; then
-    CONFIG_ID=$(deepflow-ctl agent-group-config list > /dev/null 2>&1 | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
+    CONFIG_ID=$(deepflow-ctl agent-group-config list | awk 'NR>1 && $1=="'$GROUP_NAME'" {print $2}')
 
     if [ -n "$CONFIG_ID" ]; then
         echo "Updating existing group configuration..."
