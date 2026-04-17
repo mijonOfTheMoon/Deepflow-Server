@@ -9,7 +9,7 @@ DOMAIN_NAME="legacy-host"
 CONFIG_FILE="common/config/agent-group/group-config.yaml"
 DEEPFLOWCTL_VER="${DEEPFLOW_VERSION:-$(grep DEEPFLOW_VERSION .env | cut -d= -f2)}"
 
-if ! command -v deepflow-ctl &> /dev/null; then\
+if [ ! -f "common/bin/deepflow-ctl" ]; then
     echo "Installing deepflow-ctl..."
     curl -o common/bin/deepflow-ctl \
     "https://deepflow-ce.oss-cn-beijing.aliyuncs.com/bin/ctl/$DEEPFLOWCTL_VER/linux/$(arch \
