@@ -4,12 +4,6 @@ inputs:
   cbpf:
     af_packet:
       interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
-  ebpf:
-    profile:
-      languages:
-        python_disabled: true
-        php_disabled: true
-        nodejs_disabled: true
 processors:
   request_log:
     application_protocol_inference:
@@ -31,4 +25,3 @@ global:
   circuit_breakers:
     relative_sys_load:
       trigger_threshold: 0
-      recovery_threshold: 0
