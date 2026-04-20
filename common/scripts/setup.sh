@@ -27,11 +27,11 @@ else
 fi
 
 # Create agent group if not exists
-if ! $CTL agent-group list | grep -q "$GROUP_NAME"; then
-    echo "Creating agent group '$GROUP_NAME'..."
+if ! $CTL agent-group list | grep -q "$GROUP_ID"; then
+    echo "Creating agent group '$GROUP_NAME' with ID $GROUP_ID..."
     $CTL agent-group create --id "$GROUP_ID" "$GROUP_NAME"
 else
-    echo "Agent group '$GROUP_NAME' already exists, skipping."
+    echo "Agent group '$GROUP_ID' already exists, skipping."
 fi
 
 # Create or update agent group config
