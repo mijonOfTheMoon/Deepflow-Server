@@ -141,6 +141,7 @@ services:
         cp /custom-dashboards/IO-Event.json /tmp/dashboards/DeepFlow-Templates/IO-Event.json
         cp /custom-dashboards/Application-DNS-Monitoring.json /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
         cp /custom-dashboards/Resource-Event.json /tmp/dashboards/DeepFlow-Templates/Resource-Event.json
+        find /tmp/dashboards/DeepFlow-Templates -name "*.json" -exec sed -i 's/ - Cloud//g' {} +
         exec /run.sh
     environment:
       TZ: "Asia/Jakarta"
