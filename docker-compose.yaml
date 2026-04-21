@@ -137,9 +137,10 @@ services:
         rm -f /tmp/dashboards/DeepFlow-Templates/Distributed-Tracing.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Application-Request-Log.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Network-Flow-Log.json
-        rm -f /tmp/dashboards/DeepFlow-Templates/Application-Out-Of-The-Box.json
-        rm -f /tmp/dashboards/DeepFlow-Templates/IO-Event.json
-        rm -f /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
+        cp /custom-dashboards/Application-Out-Of-The-Box.json /tmp/dashboards/DeepFlow-Templates/Application-Out-Of-The-Box.json
+        cp /custom-dashboards/IO-Event.json /tmp/dashboards/DeepFlow-Templates/IO-Event.json
+        cp /custom-dashboards/Application-DNS-Monitoring.json /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
+        cp /custom-dashboards/Resource-Event.json /tmp/dashboards/DeepFlow-Templates/Resource-Event.json
         exec /run.sh
     environment:
       TZ: "Asia/Jakarta"
@@ -158,6 +159,9 @@ services:
       - type: bind
         source: ./common/config/grafana/grafana.ini
         target: /etc/grafana/grafana.ini
+      - type: bind
+        source: ./common/config/grafana/dashboards
+        target: /custom-dashboards
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
       - /opt/deepflow/grafana/plugins:/var/lib/grafana/plugins:z
       - /opt/deepflow/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:z
