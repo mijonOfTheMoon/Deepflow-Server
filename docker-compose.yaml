@@ -134,7 +134,6 @@ services:
         rm -f /tmp/dashboards/DeepFlow-Templates/Applicaton-Dubbo-Monitoring-K8S.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Network-K8s-Pod-Map.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Network-K8s-Pod.json
-        rm -f /tmp/dashboards/DeepFlow-Templates/Distributed-Tracing.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Application-Request-Log.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Network-Flow-Log.json
         exec /run.sh
