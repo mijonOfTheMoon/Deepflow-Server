@@ -1,0 +1,253 @@
+{
+  "title": "DeepFlow: Telegraf Full Metrics",
+  "timezone": "browser",
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "templating": {
+    "list": [
+      {
+        "name": "DS_PROMETHEUS",
+        "type": "datasource",
+        "query": "prometheus",
+        "includeAll": false,
+        "multi": false,
+        "refresh": 1
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "CPU Usage (%)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "100 - avg by (tag_host) (ext_metrics__metrics__influxdb_cpu__usage_idle)",
+          "legendFormat": "{{tag_host}} CPU Usage",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory & Swap Usage (%)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_mem__used_percent)",
+          "legendFormat": "{{tag_host}} RAM Used",
+          "format": "time_series"
+        },
+        {
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_swap__used_percent)",
+          "legendFormat": "{{tag_host}} Swap Used",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "System Load",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "id": 3,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load1)",
+          "legendFormat": "{{tag_host}} Load 1m",
+          "format": "time_series"
+        },
+        {
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load5)",
+          "legendFormat": "{{tag_host}} Load 5m",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "none", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Processes",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "id": 4,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__running)",
+          "legendFormat": "{{tag_host}} Running",
+          "format": "time_series"
+        },
+        {
+          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__total)",
+          "legendFormat": "{{tag_host}} Total",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "none", "custom": { "drawStyle": "line", "lineInterpolation": "stepAfter", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Disk Usage (%)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "id": 5,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_host, tag_path) (ext_metrics__metrics__influxdb_disk__used_percent)",
+          "legendFormat": "{{tag_host}} {{tag_path}}",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Disk I/O (Bytes/sec)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "id": 6,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "rate(ext_metrics__metrics__influxdb_diskio__read_bytes[5m])",
+          "legendFormat": "{{tag_host}} {{tag_name}} Read",
+          "format": "time_series"
+        },
+        {
+          "expr": "rate(ext_metrics__metrics__influxdb_diskio__write_bytes[5m])",
+          "legendFormat": "{{tag_host}} {{tag_name}} Write",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Network Traffic (Bytes/sec)",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 24 },
+      "id": 7,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_recv[5m])",
+          "legendFormat": "{{tag_host}} {{tag_interface}} Recv",
+          "format": "time_series"
+        },
+        {
+          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_sent[5m])",
+          "legendFormat": "{{tag_host}} {{tag_interface}} Sent",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "Bps", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Docker Container CPU (%)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 },
+      "id": 8,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus))",
+          "legendFormat": "{{tag_container_name}} CPU",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Docker Container RAM (%)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 },
+      "id": 9,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent)",
+          "legendFormat": "{{tag_container_name}} RAM",
+          "format": "time_series"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent", "custom": { "drawStyle": "line", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "always" } } }
+    },
+    {
+      "type": "table",
+      "title": "Docker Containers Overview",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 40 },
+      "id": 10,
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [
+        {
+          "expr": "avg by (tag_container_name, tag_container_status) (ext_metrics__metrics__influxdb_docker_container_status__uptime_ns)",
+          "legendFormat": "{{tag_container_name}}",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus))",
+          "legendFormat": "{{tag_container_name}}",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent)",
+          "legendFormat": "{{tag_container_name}}",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "tag_container_name": "Container",
+              "tag_container_status": "Status",
+              "Value #A": "Uptime (ns)",
+              "Value #B": "CPU (%)",
+              "Value #C": "RAM (%)"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "CPU (%)" },
+            "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 } ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "RAM (%)" },
+            "properties": [ { "id": "unit", "value": "percent" }, { "id": "decimals", "value": 2 } ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Uptime (ns)" },
+            "properties": [ { "id": "unit", "value": "ns" } ]
+          }
+        ]
+      }
+    }
+  ]
+}

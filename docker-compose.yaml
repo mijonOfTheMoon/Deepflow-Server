@@ -137,10 +137,12 @@ services:
         rm -f /tmp/dashboards/DeepFlow-Templates/Distributed-Tracing.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Application-Request-Log.json
         rm -f /tmp/dashboards/DeepFlow-Templates/Network-Flow-Log.json
-        cp /custom-dashboards/Application-Out-Of-The-Box.json /tmp/dashboards/DeepFlow-Templates/Application-Out-Of-The-Box.json
-        cp /custom-dashboards/IO-Event.json /tmp/dashboards/DeepFlow-Templates/IO-Event.json
-        cp /custom-dashboards/Application-DNS-Monitoring.json /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
-        cp /custom-dashboards/Resource-Event.json /tmp/dashboards/DeepFlow-Templates/Resource-Event.json
+        cp /custom-dashboards/deepflow/Application-Out-Of-The-Box.json /tmp/dashboards/DeepFlow-Templates/Application-Out-Of-The-Box.json
+        cp /custom-dashboards/deepflow/IO-Event.json /tmp/dashboards/DeepFlow-Templates/IO-Event.json
+        cp /custom-dashboards/deepflow/Application-DNS-Monitoring.json /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
+        cp /custom-dashboards/deepflow/Resource-Event.json /tmp/dashboards/DeepFlow-Templates/Resource-Event.json
+        mkdir -p "/tmp/dashboards/Host Monitoring"
+        cp /custom-dashboards/telegraf/Main-Dashboard.json "/tmp/dashboards/Host Monitoring/Main-Dashboard.json"
         find /tmp/dashboards/DeepFlow-Templates -name "*.json" -exec sed -i 's/ - Cloud//g' {} +
         exec /run.sh
     environment:
