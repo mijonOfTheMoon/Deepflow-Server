@@ -120,8 +120,9 @@ services:
       - deepflow-grafana-init-worksdir
 
   deepflow-grafana:
-    image: registry.cn-hongkong.aliyuncs.com/deepflow-ce/grafana:10.1.5
+    image: grafana/grafana:13.0.1
     container_name: deepflow-grafana
+    user: root
     entrypoint: /bin/sh
     command:
       - -c
