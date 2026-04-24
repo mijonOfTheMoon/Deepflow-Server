@@ -1,7 +1,7 @@
 services:
 
   mysql:
-    image: mirror.gcr.io/deepflowce/mysql:8.0.39
+    image: deepflowce/mysql:8.0.39
     container_name: deepflow-mysql
     restart: always
     environment:
@@ -20,7 +20,7 @@ services:
       - deepflow
 
   clickhouse:
-    image: mirror.gcr.io/deepflowce/clickhouse-server:23.10
+    image: deepflowce/clickhouse-server:23.10
     container_name: deepflow-clickhouse
     restart: always
     environment:
@@ -42,7 +42,7 @@ services:
       - 9000:9000
 
   deepflow-server:
-    image: mirror.gcr.io/deepflowce/deepflow-server:${DEEPFLOW_VERSION}
+    image: deepflowce/deepflow-server:${DEEPFLOW_VERSION}
     container_name: deepflow-server
     restart: always
     environment:
@@ -71,7 +71,7 @@ services:
       - 30033:20033  # ingester module, data plane, port
 
   deepflow-app:
-    image: mirror.gcr.io/deepflowce/deepflow-app:${DEEPFLOW_VERSION}
+    image: deepflowce/deepflow-app:${DEEPFLOW_VERSION}
     container_name: deepflow-app
     restart: always
     environment:
@@ -86,7 +86,7 @@ services:
       - 20418:20418
 
   deepflow-grafana-init-worksdir:
-    image: mirror.gcr.io/deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
+    image: deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
     container_name: deepflow-grafana-init-worksdir
     command: /bin/sh -c "rm -rf /tmp/dashboards/*; rm -rf /var/lib/grafana/plugins/*"
     volumes:
@@ -96,7 +96,7 @@ services:
     networks:
       - deepflow
   deepflow-grafana-init-grafana-ds-dh:
-    image: mirror.gcr.io/deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
+    image: deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
     container_name: deepflow-grafana-init-grafana-ds-dh
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
@@ -109,7 +109,7 @@ services:
       - deepflow-grafana-init-worksdir
 
   deepflow-grafana-init-custom-plugins:
-    image: mirror.gcr.io/deepflowce/deepflowio-init-grafana:v7.1
+    image: deepflowce/deepflowio-init-grafana:v7.1
     container_name: deepflow-grafana-init-custom-plugins
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
@@ -120,7 +120,7 @@ services:
       - deepflow-grafana-init-worksdir
 
   deepflow-grafana:
-    image: mirror.gcr.io/grafana/grafana:13.0.1
+    image: grafana/grafana:13.0.1
     container_name: deepflow-grafana  
     user: root
     entrypoint: /bin/sh
