@@ -145,7 +145,7 @@ services:
         mkdir -p "/tmp/dashboards/Host Monitoring"
         cp /custom-dashboards/telegraf/Main-Dashboard.json "/tmp/dashboards/Host Monitoring/Main-Dashboard.json"
         find /tmp/dashboards/DeepFlow-Templates -name "*.json" -exec sed -i 's/ - Cloud//g' {} +
-        find /etc/grafana/provisioning/datasources -name '*.yaml' -exec sed -i '/^  uid:/s/ /-/g; /^  uid:/s/uid:-/uid: /' {} + 2>/dev/null || true
+        sed -i ':a; s/\(uid: [^ ]*\) /\1-/; ta' /etc/grafana/provisioning/datasources/*.yaml 2>/dev/null || true
         exec /run.sh
     environment:
       TZ: "Asia/Jakarta"
