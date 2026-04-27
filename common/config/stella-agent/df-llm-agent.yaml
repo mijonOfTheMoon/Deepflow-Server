@@ -17,16 +17,16 @@ ai:
       enable: False
       model: 'gpt'
       api_type: 'azure'
-      api_key: 'xxx' 
+      api_key: 'xxx'
       api_base: 'xxx'
-      api_version: 'xxx' 
+      api_version: 'xxx'
       engine_name:
         - 'xxx'
 
     - platform: 'aliyun'
       enable: False
       model: 'dashscope'
-      api_key: 'xxx' 
+      api_key: 'xxx'
       api_base: 'xxx'
       engine_name:
         - 'qwen-turbo'
@@ -40,7 +40,7 @@ ai:
       engine_name:
         - 'ERNIE-Bot'
         - 'ERNIE-Bot-turbo'
-        
+
     - platform: 'zhipu' # https://open.bigmodel.cn/
       enable: False
       model: 'zhipuai'
