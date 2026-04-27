@@ -1,12 +1,18 @@
 daemon:
   port: 20831
 
+api_timeout: 500
+sql_show: False
+log_file: /var/log/df-llm-agent.log
+log_level: info
+instance_path: /root/df-llm-agent
+
 mysql:
-  host: deepflow-mysql
-  port: 3306
-  user_name: root
-  user_password: deepflow
-  database: deepflow_llm
+    user_name: root
+    user_password: deepflow
+    host: deepflow-mysql
+    port: 3306
+    database: deepflow_llm
 
 ai:
   enable: False
@@ -14,7 +20,7 @@ ai:
     - platform: 'openai'
       enable: False
       model: 'openai'
-      api_key: 'sk-xxx'
+      api_key: ''
       api_base: 'https://api.openai.com/v1'
       engine_name:
         - 'gpt-4'
@@ -24,34 +30,34 @@ ai:
       enable: False
       model: 'gpt'
       api_type: 'azure'
-      api_key: 'xxx'
-      api_base: 'xxx'
-      api_version: 'xxx'
+      api_key: ''
+      api_base: ''
+      api_version: ''
       engine_name:
-        - 'xxx'
+        - ''
 
     - platform: 'aliyun'
       enable: False
       model: 'dashscope'
-      api_key: 'xxx'
-      api_base: 'xxx'
+      api_key: ''
+      api_base: ''
       engine_name:
         - 'qwen-turbo'
         - 'qwen-plus'
 
-    - platform: 'baidu' # https://cloud.baidu.com/doc/WENXINWORKSHOP/index.html
+    - platform: 'baidu'
       enable: False
       model: 'qianfan'
-      api_key: 'xxx' # FIXME
-      api_secret: 'xxx' # FIXME
+      api_key: ''
+      api_secret: ''
       engine_name:
         - 'ERNIE-Bot'
         - 'ERNIE-Bot-turbo'
 
-    - platform: 'zhipu' # https://open.bigmodel.cn/
+    - platform: 'zhipu'
       enable: False
       model: 'zhipuai'
-      api_key: 'xxx' # FIXME
+      api_key: 'xxx'
       engine_name:
         - 'chatglm_turbo'
 

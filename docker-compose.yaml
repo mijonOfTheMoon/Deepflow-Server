@@ -189,7 +189,7 @@ services:
     volumes:
       - type: bind
         source: ./common/config/stella-agent/df-llm-agent.yaml
-        target: /etc/deepflow/df-llm-agent.yaml
+        target: /etc/web/df-llm-agent.yaml
     networks:
       - deepflow
     links:
@@ -200,7 +200,6 @@ services:
     depends_on:
       - mysql 
       - deepflow-server
-      - deepflow-app
 
 networks:
   deepflow:
