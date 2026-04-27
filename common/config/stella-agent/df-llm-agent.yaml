@@ -40,8 +40,8 @@ ai:
       model: 'dashscope'
       api_key: ''
       engine_name:
-        - 'qwen-turbo'
-        - 'qwen-plus'
+        - 'qwen-max'
+        - 'qwen-plus-latest'
 
     - platform: 'baidu'
       enable: False
