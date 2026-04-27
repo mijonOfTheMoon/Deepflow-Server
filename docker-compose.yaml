@@ -88,11 +88,12 @@ services:
   deepflow-grafana-init-worksdir:
     image: deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
     container_name: deepflow-grafana-init-worksdir
-    command: /bin/sh -c "rm -rf /tmp/dashboards/*; rm -rf /var/lib/grafana/plugins/*"
+    command: /bin/sh -c "rm -rf /tmp/dashboards/*; rm -rf /var/lib/grafana/plugins/*; rm -rf /etc/grafana/provisioning/datasources/*"
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
       - /opt/deepflow/grafana/plugins:/var/lib/grafana/plugins:z
       - /opt/deepflow/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:z
+      - /opt/deepflow/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:z
     networks:
       - deepflow
   deepflow-grafana-init-grafana-ds-dh:
