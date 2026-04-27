@@ -180,6 +180,26 @@ services:
       - deepflow-grafana-init-grafana-ds-dh
       - deepflow-grafana-init-custom-plugins
 
+  stella-agent:
+    image: deepflowce/deepflowio-stella-agent-ce:latest
+    container_name: deepflow-stella-agent
+    restart: always
+    environment:
+      TZ: Asia/Jakarta
+    volumes:
+      - type: bind
+        source: ./common/config/stella-agent/df-llm-agent.yaml
+        target: /etc/deepflow/df-llm-agent.yaml
+    networks:
+      - deepflow
+    links:
+      - deepflow-server
+    ports:
+      - 20831:20831
+    depends_on:
+      - deepflow-server
+      - deepflow-app
+
 networks:
   deepflow:
     external: false

@@ -1,0 +1,51 @@
+daemon:
+  port: 20831
+
+ai:
+  enable: False
+  platforms:
+    - platform: 'openai'
+      enable: False
+      model: 'openai'
+      api_key: 'sk-xxx'
+      api_base: 'https://api.openai.com/v1'
+      engine_name:
+        - 'gpt-4'
+        - 'gpt-3.5-turbo'
+
+    - platform: 'azure'
+      enable: False
+      model: 'gpt'
+      api_type: 'azure'
+      api_key: 'xxx' 
+      api_base: 'xxx'
+      api_version: 'xxx' 
+      engine_name:
+        - 'xxx'
+
+    - platform: 'aliyun'
+      enable: False
+      model: 'dashscope'
+      api_key: 'xxx' 
+      api_base: 'xxx'
+      engine_name:
+        - 'qwen-turbo'
+        - 'qwen-plus'
+
+    - platform: 'baidu' # https://cloud.baidu.com/doc/WENXINWORKSHOP/index.html
+      enable: False
+      model: 'qianfan'
+      api_key: 'xxx' # FIXME
+      api_secret: 'xxx' # FIXME
+      engine_name:
+        - 'ERNIE-Bot'
+        - 'ERNIE-Bot-turbo'
+        
+    - platform: 'zhipu' # https://open.bigmodel.cn/
+      enable: False
+      model: 'zhipuai'
+      api_key: 'xxx' # FIXME
+      engine_name:
+        - 'chatglm_turbo'
+
+deepflow_server_url: 'http://deepflow-server:20416'
