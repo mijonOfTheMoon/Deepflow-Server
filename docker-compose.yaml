@@ -154,6 +154,7 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: "deepflow"
       DEEPFLOW_REQUEST_URL: 'http://deepflow-server:20416'
       DEEPFLOW_TRACEURL: 'http://deepflow-app:20418'
+      DEEPFLOW_AI_URL: 'http://stella-agent:20831'
       MYSQL_URL: "deepflow-mysql:30130"
       MYSQL_USER: "root"
       MYSQL_PASSWORD:  "deepflow"
