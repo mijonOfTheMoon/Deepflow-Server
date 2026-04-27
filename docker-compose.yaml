@@ -193,10 +193,12 @@ services:
     networks:
       - deepflow
     links:
+      - mysql 
       - deepflow-server
     ports:
       - 20831:20831
     depends_on:
+      - mysql 
       - deepflow-server
       - deepflow-app
 
