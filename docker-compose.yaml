@@ -181,7 +181,7 @@ services:
       - deepflow-grafana-init-custom-plugins
 
   stella-agent:
-    image: deepflowce/deepflowio-stella-agent-ce:latest
+    image: deepflowce/deepflowio-stella-agent-ce:v6.6.4
     container_name: deepflow-stella-agent
     restart: always
     environment:
