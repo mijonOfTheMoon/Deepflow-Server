@@ -17,14 +17,13 @@ mysql:
 ai:
   enable: False
   platforms:
-    - platform: 'openai'
-      enable: False
-      model: 'openai'
-      api_key: ''
-      api_base: 'https://api.openai.com/v1'
+
+    - platform: "openai"
+      enable: True
+      model: "openai"
+      api_key: "sk-xxx"
       engine_name:
-        - 'gpt-4'
-        - 'gpt-3.5-turbo'
+        - ''
 
     - platform: 'azure'
       enable: False
@@ -41,8 +40,8 @@ ai:
       model: 'dashscope'
       api_key: ''
       engine_name:
-        - 'qwen-max'
-        - 'qwen-plus-latest'
+        - 'qwen-turbo'
+        - 'qwen-plus'
 
     - platform: 'baidu'
       enable: False
@@ -56,8 +55,6 @@ ai:
     - platform: 'zhipu'
       enable: False
       model: 'zhipuai'
-      api_key: 'xxx'
+      api_key: ''
       engine_name:
         - 'chatglm_turbo'
-
-deepflow_server_url: 'http://deepflow-server:20416'
