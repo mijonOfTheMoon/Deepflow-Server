@@ -147,14 +147,11 @@ services:
         cp /custom-dashboards/telegraf/Main-Dashboard.json "/tmp/dashboards/Host Monitoring/Main-Dashboard.json"
         find /tmp/dashboards/DeepFlow-Templates -name "*.json" -exec sed -i 's/ - Cloud//g' {} +
         sed -i ':a; s/\(uid: [^ ]*\) /\1-/; ta' /etc/grafana/provisioning/datasources/*.yaml 2>/dev/null || true
-        sed -i '/type: deepflowio-deepflow-datasource/!b;n;n;n;a\    jsonData:\n      aiUrl: "${AI_URL}"\n      httpHeaderName1: "Authorization"\n    secureJsonData:\n      httpHeaderValue1: "Bearer ${AI_API_KEY}"' /etc/grafana/provisioning/datasources/*.yaml 2>/dev/null || true
         exec /run.sh
     environment:
       TZ: "Asia/Jakarta"
       GF_SECURITY_ADMIN_USER: "admin"
       GF_SECURITY_ADMIN_PASSWORD: "deepflow"
-      AI_URL: ${AI_URL}
-      AI_API_KEY: ${AI_API_KEY}
       DEEPFLOW_REQUEST_URL: 'http://deepflow-server:20416'
       DEEPFLOW_TRACEURL: 'http://deepflow-app:20418'
       MYSQL_URL: "deepflow-mysql:30130"
