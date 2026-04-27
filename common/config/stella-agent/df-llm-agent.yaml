@@ -1,12 +1,6 @@
 daemon:
   port: 20831
 
-database:
-  host: deepflow-mysql
-  port: 3306
-  user: root
-  password: deepflow
-
 ai:
   enable: False
   platforms:
