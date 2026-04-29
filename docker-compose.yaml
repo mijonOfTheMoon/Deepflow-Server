@@ -144,7 +144,7 @@ services:
         cp /custom-dashboards/deepflow/Application-DNS-Monitoring.json /tmp/dashboards/DeepFlow-Templates/Application-DNS-Monitoring.json
         cp /custom-dashboards/deepflow/Resource-Event.json /tmp/dashboards/DeepFlow-Templates/Resource-Event.json
         mkdir -p "/tmp/dashboards/Host-Monitoring"
-        cp /custom-dashboards/telegraf/Main-Dashboard.json "/tmp/dashboards/Host_Monitoring/Main-Dashboard.json"
+        cp /custom-dashboards/telegraf/Main-Dashboard.json "/tmp/dashboards/Host-Monitoring/Main-Dashboard.json"
         find /tmp/dashboards/DeepFlow-Templates -name "*.json" -exec sed -i 's/ - Cloud//g' {} +
         sed -i ':a; s/\(uid: [^ ]*\) /\1-/; ta' /etc/grafana/provisioning/datasources/*.yaml 2>/dev/null || true
         exec /run.sh
