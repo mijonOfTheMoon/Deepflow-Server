@@ -187,8 +187,8 @@ services:
     restart: always
     environment:
       TZ: Asia/Jakarta
-      DASHSCOPE_HTTP_BASE_URL: 'https://dashscope-intl.aliyuncs.com/api/v1'
-      DASHSCOPE_WEBSOCKET_BASE_URL: 'wss://dashscope-intl.aliyuncs.com/api-ws/v1/inference'
+      DASHSCOPE_HTTP_BASE_URL: ${DASHSCOPE_HTTP_BASE_URL}
+      DASHSCOPE_WEBSOCKET_BASE_URL: ${DASHSCOPE_WEBSOCKET_BASE_URL}
     volumes:
       - type: bind
         source: ./common/config/stella-agent/df-llm-agent.yaml
