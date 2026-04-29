@@ -114,7 +114,6 @@ services:
   deepflow-grafana-init-custom-plugins:
     image: jagoandevops/deepflow-init-grafana:v6.6.5
     container_name: deepflow-grafana-init-custom-plugins
-    command: /bin/sh -c "cp -raf /deepflow-plugins/deepflow-apptracing-panel /var/lib/grafana/plugins/ && cp -raf /deepflow-plugins/deepflow-topo-panel /var/lib/grafana/plugins/"
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
       - /opt/deepflow/grafana/plugins:/var/lib/grafana/plugins:z
