@@ -102,7 +102,6 @@ services:
     container_name: deepflow-grafana-init-grafana-ds-dh
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
-      - /opt/deepflow/grafana/plugins:/var/lib/grafana/plugins:z
       - /opt/deepflow/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:z
       - /opt/deepflow/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:z
     networks:
@@ -115,7 +114,6 @@ services:
     image: jagoandevops/deepflow-init-grafana:v6.6.5
     container_name: deepflow-grafana-init-custom-plugins
     volumes:
-      - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
       - /opt/deepflow/grafana/plugins:/var/lib/grafana/plugins:z
     networks:
       - deepflow
