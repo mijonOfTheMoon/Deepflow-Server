@@ -31,6 +31,9 @@ processors:
           - field_name: request_resource
             operator: equal
             value: /agent.Synchronizer/GenesisSync
+          - field_name: request_resource
+            operator: equal
+            value: /agent.Synchronizer/Push
 global:
   circuit_breakers:
     relative_sys_load:
