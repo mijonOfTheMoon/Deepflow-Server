@@ -178,8 +178,10 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - deepflow-grafana-init-grafana-ds-dh
-      - deepflow-grafana-init-custom-plugins
+      deepflow-grafana-init-grafana-ds-dh:
+        condition: service_completed_successfully
+      deepflow-grafana-init-custom-plugins:
+        condition: service_completed_successfully
 
   stella-agent:
     image: deepflowce/deepflowio-stella-agent-ce:v6.6.4
