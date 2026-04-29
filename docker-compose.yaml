@@ -189,8 +189,6 @@ services:
     restart: always
     environment:
       TZ: Asia/Jakarta
-      DASHSCOPE_HTTP_BASE_URL: ${DASHSCOPE_HTTP_BASE_URL}
-      DASHSCOPE_WEBSOCKET_BASE_URL: ${DASHSCOPE_WEBSOCKET_BASE_URL}
     volumes:
       - type: bind
         source: ./common/config/stella-agent/df-llm-agent.yaml
