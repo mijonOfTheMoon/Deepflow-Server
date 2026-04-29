@@ -21,16 +21,16 @@ processors:
         - AMQP
         - DNS
         - TLS
-  filters:
-    tag_filters:
-      HTTP:
-        - field_name: request_resource 
-          operator: equal
-          value: /api/v1/telegraf
-      HTTP2:
-        - field_name: request_resource
-          operator: equal
-          value: /agent.Synchronizer/GenesisSync
+    filters:
+      tag_filters:
+        HTTP:
+          - field_name: request_resource 
+            operator: equal
+            value: /api/v1/telegraf
+        HTTP2:
+          - field_name: request_resource
+            operator: equal
+            value: /agent.Synchronizer/GenesisSync
 global:
   circuit_breakers:
     relative_sys_load:
