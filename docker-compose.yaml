@@ -96,6 +96,7 @@ services:
       - /opt/deepflow/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:z
     networks:
       - deepflow
+      
   deepflow-grafana-init-grafana-ds-dh:
     image: deepflowce/deepflowio-init-grafana-ds-dh:v7.1.8
     container_name: deepflow-grafana-init-grafana-ds-dh
@@ -107,7 +108,8 @@ services:
     networks:
       - deepflow
     depends_on:
-      - deepflow-grafana-init-worksdir
+      deepflow-grafana-init-worksdir:
+        condition: service_completed_successfully
 
   deepflow-grafana-init-custom-plugins:
     image: jagoandevops/deepflow-init-grafana:v6.6.5
