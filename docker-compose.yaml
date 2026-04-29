@@ -110,7 +110,7 @@ services:
       - deepflow-grafana-init-worksdir
 
   deepflow-grafana-init-custom-plugins:
-    image: deepflowce/deepflowio-init-grafana:v7.1
+    image: jagoandevops/deepflow-init-grafana:v6.6.5
     container_name: deepflow-grafana-init-custom-plugins
     volumes:
       - /opt/deepflow/grafana/dashboards:/tmp/dashboards:z
