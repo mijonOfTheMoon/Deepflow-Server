@@ -184,7 +184,7 @@ services:
         condition: service_completed_successfully
 
   stella-agent:
-    image: jagoandevops/deepflowio-stella-agent-ce:v6.6.4
+    image: jagoandevops/deepflow-stella-agent:v6.6.4
     container_name: deepflow-stella-agent
     restart: always
     environment:
