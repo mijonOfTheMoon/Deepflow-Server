@@ -18,10 +18,10 @@ ai:
   enable: False
   platforms:
 
-    - platform: "openai"
+    - platform: 'openai'
       enable: True
-      model: "openai"
-      api_key: "sk-xxx"
+      model: 'openai'
+      api_key: 'sk-xxx'
       engine_name:
         - ''
 
