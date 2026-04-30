@@ -4,6 +4,13 @@ inputs:
   cbpf:
     af_packet:
       interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
+static_config:
+  os-proc-sync-enabled: true
+  os-proc-regex:
+    - match-regex: "^(sleep|bash|sh|ssh|top|ps|cat|grep|awk|sed|find|ls|systemd|kernel|kworker|kthread)$"
+      action: drop
+    - match-regex: .*
+      action: accept
 processors:
   request_log:
     application_protocol_inference:
@@ -38,5 +45,3 @@ global:
   circuit_breakers:
     relative_sys_load:
       trigger_threshold: 0
-static_config:
-  os-proc-sync-enabled: true
