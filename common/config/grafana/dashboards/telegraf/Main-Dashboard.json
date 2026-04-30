@@ -12,6 +12,22 @@
         "includeAll": false,
         "multi": false,
         "refresh": 1
+      },
+      {
+        "name": "host",
+        "label": "VM / Host",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+        "query": {
+          "query": "label_values(ext_metrics__metrics__influxdb_cpu__usage_idle, tag_host)",
+          "refId": "StandardVariableQuery"
+        },
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": true,
+        "refresh": 2,
+        "sort": 1,
+        "current": {}
       }
     ]
   },
@@ -21,10 +37,10 @@
       "title": "CPU Usage (%)",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
       "id": 1,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "100 - avg by (tag_host) (ext_metrics__metrics__influxdb_cpu__usage_idle)",
+          "expr": "100 - avg by (tag_host) (ext_metrics__metrics__influxdb_cpu__usage_idle{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} CPU Usage",
           "format": "time_series"
         }
@@ -36,15 +52,15 @@
       "title": "Memory & Swap Usage (%)",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
       "id": 2,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_mem__used_percent)",
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_mem__used_percent{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} RAM Used",
           "format": "time_series"
         },
         {
-          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_swap__used_percent)",
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_swap__used_percent{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} Swap Used",
           "format": "time_series"
         }
@@ -56,15 +72,15 @@
       "title": "System Load",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
       "id": 3,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load1)",
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load1{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} Load 1m",
           "format": "time_series"
         },
         {
-          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load5)",
+          "expr": "avg by (tag_host) (ext_metrics__metrics__influxdb_system__load5{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} Load 5m",
           "format": "time_series"
         }
@@ -76,15 +92,15 @@
       "title": "Processes",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
       "id": 4,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__running)",
+          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__running{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} Running",
           "format": "time_series"
         },
         {
-          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__total)",
+          "expr": "sum by (tag_host) (ext_metrics__metrics__influxdb_processes__total{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} Total",
           "format": "time_series"
         }
@@ -96,10 +112,10 @@
       "title": "Disk Usage (%)",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
       "id": 5,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_host, tag_path) (ext_metrics__metrics__influxdb_disk__used_percent)",
+          "expr": "avg by (tag_host, tag_path) (ext_metrics__metrics__influxdb_disk__used_percent{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_host}} {{tag_path}}",
           "format": "time_series"
         }
@@ -111,15 +127,15 @@
       "title": "Disk I/O (Bytes/sec)",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
       "id": 6,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "rate(ext_metrics__metrics__influxdb_diskio__read_bytes[5m])",
+          "expr": "rate(ext_metrics__metrics__influxdb_diskio__read_bytes{tag_host=~\"$host\"}[5m])",
           "legendFormat": "{{tag_host}} {{tag_name}} Read",
           "format": "time_series"
         },
         {
-          "expr": "rate(ext_metrics__metrics__influxdb_diskio__write_bytes[5m])",
+          "expr": "rate(ext_metrics__metrics__influxdb_diskio__write_bytes{tag_host=~\"$host\"}[5m])",
           "legendFormat": "{{tag_host}} {{tag_name}} Write",
           "format": "time_series"
         }
@@ -131,15 +147,15 @@
       "title": "Network Traffic (Bytes/sec)",
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 24 },
       "id": 7,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_recv[5m])",
+          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_recv{tag_host=~\"$host\"}[5m])",
           "legendFormat": "{{tag_host}} {{tag_interface}} Recv",
           "format": "time_series"
         },
         {
-          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_sent[5m])",
+          "expr": "rate(ext_metrics__metrics__influxdb_net__bytes_sent{tag_host=~\"$host\"}[5m])",
           "legendFormat": "{{tag_host}} {{tag_interface}} Sent",
           "format": "time_series"
         }
@@ -151,10 +167,10 @@
       "title": "Docker Container CPU (%)",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 },
       "id": 8,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus))",
+          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent{tag_host=~\"$host\"}) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus{tag_host=~\"$host\"}))",
           "legendFormat": "{{tag_container_name}} CPU",
           "format": "time_series"
         }
@@ -166,10 +182,10 @@
       "title": "Docker Container RAM (%)",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 },
       "id": 9,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent)",
+          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_container_name}} RAM",
           "format": "time_series"
         }
@@ -181,24 +197,24 @@
       "title": "Docker Containers Overview",
       "gridPos": { "h": 10, "w": 24, "x": 0, "y": 40 },
       "id": 10,
-      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
       "targets": [
         {
-          "expr": "avg by (tag_container_name, tag_container_status) (ext_metrics__metrics__influxdb_docker_container_status__uptime_ns)",
+          "expr": "avg by (tag_container_name, tag_container_status) (ext_metrics__metrics__influxdb_docker_container_status__uptime_ns{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_container_name}}",
           "format": "table",
           "instant": true,
           "refId": "A"
         },
         {
-          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus))",
+          "expr": "avg by (tag_container_name) (avg by (tag_container_name, tag_host) (ext_metrics__metrics__influxdb_docker_container_cpu__usage_percent{tag_host=~\"$host\"}) / on(tag_host) group_left() avg by (tag_host) (ext_metrics__metrics__influxdb_docker__n_cpus{tag_host=~\"$host\"}))",
           "legendFormat": "{{tag_container_name}}",
           "format": "table",
           "instant": true,
           "refId": "B"
         },
         {
-          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent)",
+          "expr": "avg by (tag_container_name) (ext_metrics__metrics__influxdb_docker_container_mem__usage_percent{tag_host=~\"$host\"})",
           "legendFormat": "{{tag_container_name}}",
           "format": "table",
           "instant": true,
@@ -206,16 +222,11 @@
         }
       ],
       "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
+        { "id": "merge", "options": {} },
         {
           "id": "organize",
           "options": {
-            "excludeByName": {
-              "Time": true
-            },
+            "excludeByName": { "Time": true },
             "renameByName": {
               "tag_container_name": "Container",
               "tag_container_status": "Status",
@@ -227,12 +238,7 @@
         }
       ],
       "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "displayMode": "auto"
-          }
-        },
+        "defaults": { "custom": { "align": "auto", "displayMode": "auto" } },
         "overrides": [
           {
             "matcher": { "id": "byName", "options": "CPU (%)" },
