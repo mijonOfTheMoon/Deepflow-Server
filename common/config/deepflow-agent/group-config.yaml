@@ -38,3 +38,5 @@ global:
   circuit_breakers:
     relative_sys_load:
       trigger_threshold: 0
+static_config:
+  os-proc-sync-enabled: true
