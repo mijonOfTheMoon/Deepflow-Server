@@ -21,7 +21,7 @@ ai:
     - platform: 'openai'
       enable: True
       model: 'openai'
-      api_key: 'sk-xxx'
+      api_key: ''
       engine_name:
         - ''
 
