@@ -29,7 +29,7 @@ After server is running, create agent group and push config:
 bash scripts/setup-group.sh
 ```
 
-This creates a `sekawan` group with config for Docker environments. The script outputs the `agent-group-id`to use in your agent's config.
+This creates a new group with config for Docker environments. The script outputs the `agent-group-id`to use in your agent's config.
 
 ## License
 

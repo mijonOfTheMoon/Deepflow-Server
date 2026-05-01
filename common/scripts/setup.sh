@@ -3,8 +3,8 @@
 set -e
 
 CTL="common/bin/deepflow-ctl"
-GROUP_NAME="sekawan"
-GROUP_ID="g-sekawan123"
+GROUP_NAME="deepflow"
+GROUP_ID="g-deepflow12"
 DOMAIN_CONFIG="common/config/deepflow-agent/domain-config.yaml"
 GROUP_CONFIG="common/config/deepflow-agent/group-config.yaml"
 DEEPFLOWCTL_VER="${DEEPFLOW_VERSION:-$(grep DEEPFLOW_VERSION .env | cut -d= -f2)}"
