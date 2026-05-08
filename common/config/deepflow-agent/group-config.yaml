@@ -4,6 +4,10 @@ inputs:
   cbpf:
     af_packet:
       interface_regex: "^(tap.*|cali.*|veth.*|eth.*|en[osipx].*|lxc.*|lo|[0-9a-f]+_h|docker[0-9]*|br-.*)$"
+  proc:
+    enabled: true
+    socket_info_sync_interval: 10s
+    min_lifetime: 3s
 processors:
   request_log:
     application_protocol_inference:
@@ -37,6 +41,9 @@ processors:
           - field_name: request_resource
             operator: equal
             value: /agent.Synchronizer/Sync
+          - field_name: request_resource
+            operator: equal
+            value: /agent.Synchronizer/GPIDSync
 global:
   circuit_breakers:
     relative_sys_load:
